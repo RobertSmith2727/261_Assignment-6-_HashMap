@@ -183,8 +183,9 @@ class HashMap:
             return
         index = self.get_hash_index(key)
         linked_list = self._buckets.get_at_index(index)
-        linked_list.remove(key)
-
+        val = linked_list.remove(key)
+        if val is True:
+            self._size -= 1
 
     def get_keys_and_values(self) -> DynamicArray:
         """
