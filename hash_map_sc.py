@@ -124,17 +124,20 @@ class HashMap:
         """
         TODO: Write this implementation
         """
-        if self.table_load() < 1:
+        # if less than 1
+        if new_capacity < 1:
             return
-        if self.table_load() >= 1:
+        else:
             temp_hash = self._buckets
-
+            # finds new capacity
             if self._is_prime(new_capacity):
                 self._capacity = new_capacity
             else:
                 new_capacity = self._next_prime(new_capacity)
                 self._capacity = new_capacity
+            # clears old hash
             self.clear()
+            # rehashes
             for indexes in range(temp_hash.length()):
                 linked_list = temp_hash[indexes]
                 if linked_list.length() != 0:
