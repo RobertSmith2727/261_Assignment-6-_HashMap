@@ -181,19 +181,19 @@ class HashMap:
             conditional = 0
             spots = None
             saved_index = index
-            while self._buckets[index] is not None:
-                index = saved_index
-                if self._buckets[index].key == key:
-                    size = 1
-                    return index, size
-                if conditional == 0:
-                    index = index + probe**2
-                if index >= self._capacity:
-                    conditional += 1
-                    spots = self._capacity - self._size
-                if conditional > 0:
-                    index = (index + probe ** 2) % spots
-                probe += 1
+            # while self._buckets[index] is not None:
+            #     index = saved_index
+            #     if self._buckets[index].key == key:
+            #         size = 1
+            #         return index, size
+            #     if conditional == 0:
+            #         index = index + probe**2
+            #     if index >= self._capacity:
+            #         conditional += 1
+            #         spots = self._capacity - self._size
+            #     if conditional > 0:
+            #         index = (index + probe ** 2) % spots
+            #     probe += 1
 
         return index, size
 
