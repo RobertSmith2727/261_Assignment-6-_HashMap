@@ -116,9 +116,7 @@ class HashMap:
             # rehashes
             for index in range(temp_hash.length()):
                 if temp_hash[index] is not None:
-                    key = temp_hash[index][0]
-                    value = temp_hash[index][1]
-                    self.put(key, value)
+                    self.put(temp_hash[index].key, temp_hash[index].value)
 
     def get(self, key: str) -> object:
         """
@@ -183,7 +181,7 @@ class HashMap:
             conditional = 0
             spots = None
             while self._buckets[index] is not None:
-                if self._buckets[index][0] == key:
+                if self._buckets[index].key == key:
                     size = 1
                     return index, size
                 if conditional == 0:
@@ -200,22 +198,22 @@ class HashMap:
 
 # ------------------- BASIC TESTING ---------------------------------------- #
 if __name__ == "__main__":
-    # print("\nPDF - put example 1")
-    # print("-------------------")
-    # m = HashMap(53, hash_function_1)
-    # for i in range(150):
-    #     m.put('str' + str(i), i * 100)
-    #     if i % 25 == 24:
-    #         print(m.empty_buckets(), round(m.table_load(), 2), m.get_size(),
-    #               m.get_capacity())
-    # print("\nPDF - put example 2")
-    # print("-------------------")
-    # m = HashMap(41, hash_function_2)
-    # for i in range(50):
-    #     m.put('str' + str(i // 3), i * 100)
-    #     if i % 10 == 9:
-    #         print(m.empty_buckets(), round(m.table_load(), 2), m.get_size(),
-    #               m.get_capacity())
+    print("\nPDF - put example 1")
+    print("-------------------")
+    m = HashMap(53, hash_function_1)
+    for i in range(150):
+        m.put('str' + str(i), i * 100)
+        if i % 25 == 24:
+            print(m.empty_buckets(), round(m.table_load(), 2), m.get_size(),
+                  m.get_capacity())
+    print("\nPDF - put example 2")
+    print("-------------------")
+    m = HashMap(41, hash_function_2)
+    for i in range(50):
+        m.put('str' + str(i // 3), i * 100)
+        if i % 10 == 9:
+            print(m.empty_buckets(), round(m.table_load(), 2), m.get_size(),
+                  m.get_capacity())
     print("\nPDF - table_load example 1")
     print("--------------------------")
     m = HashMap(101, hash_function_1)
