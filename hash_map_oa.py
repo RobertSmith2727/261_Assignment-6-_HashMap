@@ -122,7 +122,10 @@ class HashMap:
         """
         TODO: Write this implementation
         """
-        pass
+        # index, size = self.get_hash_index(key)
+        # if index is not None:
+        #     return self._buckets[index].value
+        # return
 
     def contains_key(self, key: str) -> bool:
         """
@@ -184,7 +187,7 @@ class HashMap:
             if self._buckets[index].key == key:
                 size = -1
                 return index, size
-            index = saved_index
+
             if conditional == 0:
                 index = saved_index
                 index = index + probe**2
