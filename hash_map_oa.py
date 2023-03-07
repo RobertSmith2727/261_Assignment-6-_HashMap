@@ -167,6 +167,7 @@ class HashMap:
         """
         pass
 
+
     def get_hash_index(self, key):
         """
         Returns the hash index
