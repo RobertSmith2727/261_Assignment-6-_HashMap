@@ -190,7 +190,7 @@ class HashMap:
                 index = index + probe**2
             if index >= self._capacity:
                 conditional += 1
-                spots = self._capacity - self._size
+                spots = self._capacity
             if conditional > 0:
                 index = saved_index
                 index = (index + probe ** 2) % spots
