@@ -81,7 +81,7 @@ class HashMap:
         # gets index
         index, size = self.get_hash_index(key)
         self._size += size
-        self._buckets[index] = key, value
+        self._buckets[index] = HashEntry(key, value)
         self._size += 1
 
     def table_load(self) -> float:
@@ -119,6 +119,7 @@ class HashMap:
                     key = temp_hash[index][0]
                     value = temp_hash[index][1]
                     self.put(key, value)
+
     def get(self, key: str) -> object:
         """
         TODO: Write this implementation
