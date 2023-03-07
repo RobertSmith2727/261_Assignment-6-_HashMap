@@ -180,7 +180,9 @@ class HashMap:
             probe = 1
             conditional = 0
             spots = None
+            saved_index = index
             while self._buckets[index] is not None:
+                index = saved_index
                 if self._buckets[index].key == key:
                     size = 1
                     return index, size
