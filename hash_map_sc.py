@@ -88,7 +88,7 @@ class HashMap:
         link_list = self._buckets.get_at_index(index)
         # replaces value if key is already used
         if link_list.contains(key):
-            link_list.remove(key)  # todo
+            link_list.remove(key)
             self._size -= 1
         link_list.insert(key, value)
         self._size += 1
@@ -148,7 +148,7 @@ class HashMap:
 
     def get(self, key: str):
         """
-        gets the
+        Gets the value associated with the key
         """
         index = self.get_hash_index(key)
         linked_list = self._buckets.get_at_index(index)
@@ -191,7 +191,16 @@ class HashMap:
         """
         TODO: Write this implementation
         """
-        pass
+        da = DynamicArray()
+        da_index = 0
+        for indexes in range(self._capacity):
+            linked_list = self._buckets.get_at_index(indexes)
+            if linked_list.length() != 0:
+                for nodes in linked_list:
+                    tup = nodes.key, nodes.value
+                    da.append(tup)
+                    da_index += 1
+        return da
 
     def get_hash_index(self, key) -> int:
         """
@@ -205,9 +214,33 @@ def find_mode(da: DynamicArray) -> (DynamicArray, int):
     """
     TODO: Write this implementation
     """
-    # if you'd like to use a hash map,
-    # use this instance of your Separate Chaining HashMap
-    map = HashMap()
+    # creates hash map
+    map = HashMap(da.length())
+    # sets element of da to map as keys and frequency as their value
+    for index in range(da.length()):
+        key = da[index]
+        value = map.get(key)
+        if value is None:
+            value = 0
+        value += 1
+        map.put(key, value)
+
+    frequency = 0
+    # finds most frequent
+    for index in range(da.length()):
+        key = da[index]
+        value = map.get(key)
+        if value > frequency:
+            frequency = value
+    arr = DynamicArray()
+    # appends most frequent to arr
+    for index in range(da.length()):
+        key = da[index]
+        value = map.get(key)
+        if value == frequency:
+            arr.append(key)
+            map.remove(key)
+    return arr, frequency
 
 
 # ------------------- BASIC TESTING ---------------------------------------- #

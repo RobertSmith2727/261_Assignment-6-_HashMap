@@ -74,26 +74,51 @@ class HashMap:
         """
         TODO: Write this implementation
         """
-        pass
+        # resizes capacity if load 1+
+        new_capacity = self._capacity * 2
+        if self.table_load() >= .5:
+            self.resize_table(new_capacity)
+        # gets index
+        index, size = self.get_hash_index(key)
+        self._size += size
+        self._buckets[index] = key, value
+        self._size += 1
 
     def table_load(self) -> float:
         """
         TODO: Write this implementation
         """
-        pass
+        return self._size/self._capacity
 
     def empty_buckets(self) -> int:
         """
         TODO: Write this implementation
         """
-        pass
+        return self._capacity - self._size
 
     def resize_table(self, new_capacity: int) -> None:
         """
         TODO: Write this implementation
         """
-        pass
-
+        # if less than 1
+        if new_capacity < self._size:
+            return
+        else:
+            temp_hash = self._buckets
+            # finds new capacity
+            if self._is_prime(new_capacity):
+                self._capacity = new_capacity
+            else:
+                new_capacity = self._next_prime(new_capacity)
+                self._capacity = new_capacity
+            # clears old hash
+            self.clear()
+            # rehashes
+            for index in range(temp_hash.length()):
+                if temp_hash[index] is not None:
+                    key = temp_hash[index][0]
+                    value = temp_hash[index][1]
+                    self.put(key, value)
     def get(self, key: str) -> object:
         """
         TODO: Write this implementation
@@ -104,7 +129,11 @@ class HashMap:
         """
         TODO: Write this implementation
         """
-        pass
+        index, size = self.get_hash_index(key)
+        if self._buckets[index] is None:
+            return False
+        else:
+            return True
 
     def remove(self, key: str) -> None:
         """
@@ -116,7 +145,10 @@ class HashMap:
         """
         TODO: Write this implementation
         """
-        pass
+        self._buckets = DynamicArray()
+        for x in range(self._capacity):
+            self._buckets.append(None)
+        self._size = 0
 
     def get_keys_and_values(self) -> DynamicArray:
         """
@@ -136,25 +168,53 @@ class HashMap:
         """
         pass
 
+    def get_hash_index(self, key):
+        """
+        Returns the hash index
+        """
+        size = 0
+        # gets first hash index
+        hash = self._hash_function(key)
+        index = hash % self._capacity
+        # quadratic probing if not empty
+        if self._buckets[index] is not None:
+            probe = 1
+            conditional = 0
+            spots = None
+            while self._buckets[index] is not None:
+                if self._buckets[index][0] == key:
+                    size = 1
+                    return index, size
+                if conditional == 0:
+                    index = index + probe**2
+                if index >= self._capacity:
+                    conditional += 1
+                    spots = self._capacity - self._size
+                if conditional > 0:
+                    index = (index + probe ** 2) % spots
+                probe += 1
+
+        return index, size
+
 
 # ------------------- BASIC TESTING ---------------------------------------- #
 if __name__ == "__main__":
-    print("\nPDF - put example 1")
-    print("-------------------")
-    m = HashMap(53, hash_function_1)
-    for i in range(150):
-        m.put('str' + str(i), i * 100)
-        if i % 25 == 24:
-            print(m.empty_buckets(), round(m.table_load(), 2), m.get_size(),
-                  m.get_capacity())
-    print("\nPDF - put example 2")
-    print("-------------------")
-    m = HashMap(41, hash_function_2)
-    for i in range(50):
-        m.put('str' + str(i // 3), i * 100)
-        if i % 10 == 9:
-            print(m.empty_buckets(), round(m.table_load(), 2), m.get_size(),
-                  m.get_capacity())
+    # print("\nPDF - put example 1")
+    # print("-------------------")
+    # m = HashMap(53, hash_function_1)
+    # for i in range(150):
+    #     m.put('str' + str(i), i * 100)
+    #     if i % 25 == 24:
+    #         print(m.empty_buckets(), round(m.table_load(), 2), m.get_size(),
+    #               m.get_capacity())
+    # print("\nPDF - put example 2")
+    # print("-------------------")
+    # m = HashMap(41, hash_function_2)
+    # for i in range(50):
+    #     m.put('str' + str(i // 3), i * 100)
+    #     if i % 10 == 9:
+    #         print(m.empty_buckets(), round(m.table_load(), 2), m.get_size(),
+    #               m.get_capacity())
     print("\nPDF - table_load example 1")
     print("--------------------------")
     m = HashMap(101, hash_function_1)
