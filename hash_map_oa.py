@@ -122,10 +122,10 @@ class HashMap:
         """
         TODO: Write this implementation
         """
-        # index, size = self.get_hash_index(key)
-        # if index is not None:
-        #     return self._buckets[index].value
-        # return
+        index, size = self.get_hash_index(key)
+        if self._buckets[index] is not None:
+            return self._buckets[index].value
+        return
 
     def contains_key(self, key: str) -> bool:
         """
