@@ -176,26 +176,25 @@ class HashMap:
         hash = self._hash_function(key)
         index = hash % self._capacity
         # quadratic probing if not empty
-        if self._buckets[index] is not None:
-            probe = 1
-            conditional = 0
-            spots = None
-            saved_index = index
-            while self._buckets[index] is not None:
-
-                if self._buckets[index].key == key:
-                    size = -1
-                    return index, size
-                if conditional == 0:
-                    index = saved_index
-                    index = index + probe**2
-                if index >= self._capacity:
-                    conditional += 1
-                    spots = self._capacity - self._size
-                if conditional > 0:
-                    index = saved_index
-                    index = (index + probe ** 2) % spots
-                probe += 1
+        probe = 1
+        conditional = 0
+        spots = None
+        saved_index = index
+        while self._buckets[index] is not None:
+            if self._buckets[index].key == key:
+                size = -1
+                return index, size
+            index = saved_index
+            if conditional == 0:
+                index = saved_index
+                index = index + probe**2
+            if index >= self._capacity:
+                conditional += 1
+                spots = self._capacity - self._size
+            if conditional > 0:
+                index = saved_index
+                index = (index + probe ** 2) % spots
+            probe += 1
 
         return index, size
 
