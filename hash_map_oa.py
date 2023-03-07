@@ -79,9 +79,8 @@ class HashMap:
         if self.table_load() >= .5:
             self.resize_table(new_capacity)
         # gets index
-        index = self.get_hash_index(key)
-        if self._buckets[index] is not None and self._buckets[index].key == key:
-            self._size -= 1
+        index, size = self.get_hash_index(key)
+        self._size += size
         self._buckets[index] = HashEntry(key, value)
         self._size += 1
 
@@ -132,7 +131,7 @@ class HashMap:
         """
         TODO: Write this implementation
         """
-        index = self.get_hash_index(key)
+        index, size = self.get_hash_index(key)
         if self._buckets[index] is None:
             return False
         else:
@@ -185,6 +184,9 @@ class HashMap:
         spots = None
         initial_index = index
         while self._buckets[index] is not None:
+            if self._buckets[index].key == key:
+                size = -1
+                return index, size
             if conditional == 0:
                 index = initial_index + probe**2
             if index >= self._capacity:
@@ -193,7 +195,8 @@ class HashMap:
             if conditional > 0:
                 index = (initial_index + probe ** 2) % spots
             probe += 1
-        return index
+
+        return index, size
 
 
 # ------------------- BASIC TESTING ---------------------------------------- #
