@@ -167,7 +167,6 @@ class HashMap:
         """
         pass
 
-
     def get_hash_index(self, key):
         """
         Returns the hash index
@@ -179,13 +178,13 @@ class HashMap:
         # quadratic probing if not empty
         if self._buckets[index] is not None:
             probe = 1
-            wrapped_probe = 1
             conditional = 0
             spots = None
             saved_index = index
             while self._buckets[index] is not None:
+
                 if self._buckets[index].key == key:
-                    size = 1
+                    size = -1
                     return index, size
                 if conditional == 0:
                     index = saved_index
@@ -195,7 +194,7 @@ class HashMap:
                     spots = self._capacity - self._size
                 if conditional > 0:
                     index = saved_index
-                    index = (index + wrapped_probe ** 2) % spots
+                    index = (index + probe ** 2) % spots
                 probe += 1
 
         return index, size
