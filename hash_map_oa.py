@@ -88,7 +88,7 @@ class HashMap:
         """
         TODO: Write this implementation
         """
-        return self._size/self._capacity
+        return self._size / self._capacity
 
     def empty_buckets(self) -> int:
         """
@@ -134,14 +134,18 @@ class HashMap:
         index, size = self.get_hash_index(key)
         if self._buckets[index] is None:
             return False
-        else:
-            return True
+        return True
 
     def remove(self, key: str) -> None:
         """
         TODO: Write this implementation
         """
-        pass
+        index, size = self.get_hash_index(key, 1)
+        if self._buckets[index] is None:
+            return
+        # edge case for remove
+        self._buckets[index].key = 'RIP-->tombstone<--RIP'
+        self._size -= 1
 
     def clear(self) -> None:
         """
@@ -170,25 +174,32 @@ class HashMap:
         """
         pass
 
-    def get_hash_index(self, key):
+    def get_hash_index(self, key, remove=0):
         """
         Returns the hash index
         """
-        size = 0
+
         # gets first hash index
         hash = self._hash_function(key)
         index = hash % self._capacity
+
         # quadratic probing if not empty
+        size = 0
         probe = 1
         conditional = 0
         spots = None
         initial_index = index
         while self._buckets[index] is not None:
+            # if index was removed, index open
+            # passes if looking for value to remove
+            if remove == 0:
+                if self._buckets[index].is_tombstone is True:
+                    return index, size
             if self._buckets[index].key == key:
                 size = -1
                 return index, size
             if conditional == 0:
-                index = initial_index + probe**2
+                index = initial_index + probe ** 2
             if index >= self._capacity:
                 conditional += 1
                 spots = self._capacity
