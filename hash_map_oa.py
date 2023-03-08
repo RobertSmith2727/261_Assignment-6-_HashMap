@@ -145,6 +145,7 @@ class HashMap:
             return
         self._buckets[index].is_tombstone = True
         self._size -= 1
+        return
 
     def clear(self) -> None:
         """
