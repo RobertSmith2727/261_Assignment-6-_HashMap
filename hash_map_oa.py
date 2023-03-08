@@ -115,7 +115,7 @@ class HashMap:
             self.clear()
             # rehashes
             for index in range(temp_hash.length()):
-                if temp_hash[index] is not None:
+                if temp_hash[index] is not None and temp_hash[index].is_tombstone is False:
                     self.put(temp_hash[index].key, temp_hash[index].value)
 
     def get(self, key: str) -> object:
@@ -160,7 +160,12 @@ class HashMap:
         """
         TODO: Write this implementation
         """
-        pass
+        dynamic_array = DynamicArray()
+        for index in range(self._capacity):
+            if self._buckets[index] is not None and self._buckets[index].is_tombstone is False:
+                tup = self._buckets[index].key, self._buckets[index].value
+                dynamic_array.append(tup)
+        return dynamic_array
 
     def __iter__(self):
         """
@@ -191,7 +196,7 @@ class HashMap:
         initial_index = index
         while self._buckets[index] is not None:
             # if index was removed, index open
-            # passes if looking for value to remove
+            # passes if looking for value to remove since key will match
             if remove == 0:
                 if self._buckets[index].is_tombstone is True:
                     return index, size
