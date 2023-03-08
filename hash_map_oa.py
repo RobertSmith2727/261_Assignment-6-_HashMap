@@ -143,8 +143,6 @@ class HashMap:
         index, size = self.get_hash_index(key, 1)
         if self._buckets[index] is None:
             return
-        # edge case for remove
-        self._buckets[index].key = 'RIP-->tombstone<--RIP'
         self._size -= 1
 
     def clear(self) -> None:
