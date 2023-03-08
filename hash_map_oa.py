@@ -122,7 +122,7 @@ class HashMap:
         """
         TODO: Write this implementation
         """
-        index, size = self.get_hash_index(key)
+        index, size = self.get_hash_index(key, 1)
         if self._buckets[index] is not None:
             return self._buckets[index].value
         return
@@ -195,7 +195,8 @@ class HashMap:
             if remove == 0:
                 if self._buckets[index].is_tombstone is True:
                     return index, size
-            if self._buckets[index].key == key:
+            if self._buckets[index].key == key and \
+                    self._buckets[index].is_tombstone is False:
                 size = -1
                 return index, size
             if conditional == 0:
