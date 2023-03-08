@@ -143,6 +143,7 @@ class HashMap:
         index, size = self.get_hash_index(key, 1)
         if self._buckets[index] is None:
             return
+        self._buckets[index].is_tombstone = True
         self._size -= 1
 
     def clear(self) -> None:
