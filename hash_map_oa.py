@@ -171,13 +171,39 @@ class HashMap:
         """
         TODO: Write this implementation
         """
-        pass
+        self._index = 0
+        return self
 
     def __next__(self):
         """
-        TODO: Write this implementation
+        Gets the next value and advances iterator
         """
-        pass
+        value = self._buckets[self._index]
+        self._index += 1
+        if value is not None:
+            return value
+        else:
+            pass
+
+
+    # def __iter__(self):
+    #     """
+    #     Creates iterator for loop
+    #     """
+    #     self._index = 0
+    #     return self
+    #
+    # def __next__(self):
+    #     """
+    #     Gets the next value and advances iterator
+    #     """
+    #     try:
+    #         value = self._bucket[self._index]
+    #     except DynamicArrayException:
+    #         raise StopIteration
+    #
+    #     self._index = self._index + 1
+    #     return value
 
     def get_hash_index(self, key, remove=0):
         """

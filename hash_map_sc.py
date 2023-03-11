@@ -90,6 +90,7 @@ class HashMap:
         if link_list.contains(key):
             link_list.remove(key)
             self._size -= 1
+        # insert key/value
         link_list.insert(key, value)
         self._size += 1
 
@@ -108,7 +109,7 @@ class HashMap:
         """
         Returns the hash's load factor
         """
-        return self._size/self._capacity
+        return self._size / self._capacity
 
     def clear(self) -> None:
         """
@@ -210,6 +211,7 @@ class HashMap:
         index = hash % self._capacity
         return index
 
+
 def find_mode(da: DynamicArray) -> (DynamicArray, int):
     """
     TODO: Write this implementation
@@ -217,30 +219,29 @@ def find_mode(da: DynamicArray) -> (DynamicArray, int):
     # creates hash map
     map = HashMap(da.length())
     # sets element of da to map as keys and frequency as their value
+    highest_frequency = 0
     for index in range(da.length()):
         key = da[index]
         value = map.get(key)
+        # sets value to zero if value not in da
         if value is None:
             value = 0
+        # inc value
         value += 1
+        # sets highest frequency
+        if value > highest_frequency:
+            highest_frequency = value
         map.put(key, value)
 
-    frequency = 0
-    # finds most frequent
-    for index in range(da.length()):
-        key = da[index]
-        value = map.get(key)
-        if value > frequency:
-            frequency = value
     arr = DynamicArray()
-    # appends most frequent to arr
+    # appends most frequent vals to arr
     for index in range(da.length()):
         key = da[index]
         value = map.get(key)
-        if value == frequency:
+        if value == highest_frequency:
             arr.append(key)
             map.remove(key)
-    return arr, frequency
+    return arr, highest_frequency
 
 
 # ------------------- BASIC TESTING ---------------------------------------- #
