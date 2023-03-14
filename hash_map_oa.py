@@ -179,16 +179,20 @@ class HashMap:
         """
         Gets the next value and advances iterator
         """
+
         if self._returned_vals != self._size:
             while self._buckets[self._index] is None:
                 self._index += 1
+                if self._buckets[self._index] is not None:
+                    while self._buckets[self._index].is_tombstone is True:
+                        self._index += 1
             value = self._buckets[self._index]
             self._index += 1
             if value is not None:
                 self._returned_vals += 1
                 return value
         else:
-            StopIteration
+            raise StopIteration
 
 
 
@@ -418,14 +422,14 @@ if __name__ == "__main__":
     m.remove('1')
     m.resize_table(12)
     print(m.get_keys_and_values())
-    print("\nPDF - __iter__(), __next__() example 1")
-    print("---------------------")
-    m = HashMap(10, hash_function_1)
-    for i in range(5):
-        m.put(str(i), str(i * 10))
-    print(m)
-    for item in m:
-        print('K:', item.key, 'V:', item.value)
+    # print("\nPDF - __iter__(), __next__() example 1")
+    # print("---------------------")
+    # m = HashMap(10, hash_function_1)
+    # for i in range(5):
+    #     m.put(str(i), str(i * 10))
+    # print(m)
+    # for item in m:
+    #     print('K:', item.key, 'V:', item.value)
     print("\nPDF - __iter__(), __next__() example 2")
     print("---------------------")
     m = HashMap(10, hash_function_2)
