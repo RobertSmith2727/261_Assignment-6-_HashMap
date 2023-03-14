@@ -1,3 +1,4 @@
+
 from a6_include import (DynamicArray, LinkedList,
                         hash_function_1, hash_function_2)
 
@@ -76,7 +77,7 @@ class HashMap:
         """
         Adds the key/value pair in the hash map
         Replaces value if key exists
-        Resizes if load table 1 or greater
+        Resizes if load table 1.0 or greater
         """
         # resizes capacity if load 1+
         new_capacity = self._capacity * 2
@@ -160,7 +161,8 @@ class HashMap:
 
     def contains_key(self, key: str) -> bool:
         """
-        TODO: Write this implementation
+        Returns True if in hash
+        Otherwise False
         """
         # if empty
         if self._size == 0:
@@ -177,7 +179,8 @@ class HashMap:
 
     def remove(self, key: str) -> None:
         """
-        TODO: Write this implementation
+        Removes the given key and value by making tombstone True
+        If the key does not exist it does nothing
         """
         # if empty
         if self._size == 0:
@@ -190,7 +193,7 @@ class HashMap:
 
     def get_keys_and_values(self) -> DynamicArray:
         """
-        TODO: Write this implementation
+        Returns a dynamic array of the keys and values as a tuple in the DA
         """
         da = DynamicArray()
         da_index = 0
@@ -214,7 +217,8 @@ class HashMap:
 
 def find_mode(da: DynamicArray) -> (DynamicArray, int):
     """
-    TODO: Write this implementation
+    Receives a dynamic array and returns a dynamic array of the
+    most occurring value(s) and a integer representing the frequency
     """
     # creates hash map
     map = HashMap(da.length())

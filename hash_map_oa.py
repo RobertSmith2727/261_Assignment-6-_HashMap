@@ -1,3 +1,11 @@
+# Name: Robert Smith
+# OSU Email: Smithro8@oregonstate.edu
+# Course:       CS261 - Data Structures
+# Assignment: 6
+# Due Date: 03/17/2023
+# Description: A open addressing implementation of a hash table. Has various methods such as put, clear, get, and
+#              contains.
+
 from a6_include import (DynamicArray, DynamicArrayException, HashEntry,
                         hash_function_1, hash_function_2)
 
@@ -72,7 +80,8 @@ class HashMap:
     # ------------------------------------------------------------------ #
     def put(self, key: str, value: object) -> None:
         """
-        TODO: Write this implementation
+        Adds/updates a key and value. Overwrites if key exists
+        If the load is 0.5 or greater it will resize to double its capacity
         """
         # resizes capacity if load 1+
         new_capacity = self._capacity * 2
@@ -86,19 +95,23 @@ class HashMap:
 
     def table_load(self) -> float:
         """
-        TODO: Write this implementation
+        Returns the current table load factor
         """
         return self._size / self._capacity
 
     def empty_buckets(self) -> int:
         """
-        TODO: Write this implementation
+        Returns the number of empty buckets
         """
         return self._capacity - self._size
 
     def resize_table(self, new_capacity: int) -> None:
         """
-        TODO: Write this implementation
+        Resizes to the passed capacity
+        Rehashes the keys after resize
+        Will not make it smaller than the current size
+        Makes sure the new capacity is prime
+        otherwise gets the next prime value greater than the passed capacity
         """
         # if less than 1
         if new_capacity < self._size:
@@ -120,7 +133,8 @@ class HashMap:
 
     def get(self, key: str) -> object:
         """
-        TODO: Write this implementation
+        Returns the value of the passed key
+        Otherwise returns none if not in hash
         """
         index, size = self.get_hash_index(key, 1)
         if self._buckets[index] is not None:
@@ -129,7 +143,8 @@ class HashMap:
 
     def contains_key(self, key: str) -> bool:
         """
-        TODO: Write this implementation
+        Returns True if in hash
+        Otherwise False
         """
         index, size = self.get_hash_index(key)
         if self._buckets[index] is None:
@@ -138,7 +153,8 @@ class HashMap:
 
     def remove(self, key: str) -> None:
         """
-        TODO: Write this implementation
+        Removes the given key and value by making tombstone True
+        If the key does not exist it does nothing
         """
         index, size = self.get_hash_index(key, 1)
         if self._buckets[index] is None:
@@ -149,7 +165,7 @@ class HashMap:
 
     def clear(self) -> None:
         """
-        TODO: Write this implementation
+        Clears the current hash table
         """
         self._buckets = DynamicArray()
         for x in range(self._capacity):
@@ -158,7 +174,7 @@ class HashMap:
 
     def get_keys_and_values(self) -> DynamicArray:
         """
-        TODO: Write this implementation
+        Returns a dynamic array of the keys and values as a tuple in the DA
         """
         dynamic_array = DynamicArray()
         for index in range(self._capacity):
@@ -169,7 +185,7 @@ class HashMap:
 
     def __iter__(self):
         """
-        TODO: Write this implementation
+        Creates iterator and number of returned values for loop
         """
         self._index = 0
         self._returned_vals = 0
@@ -179,7 +195,6 @@ class HashMap:
         """
         Gets the next valid object and advances iterator
         """
-
         try:
             conditional = 0
             # stops iteration once all vals returned
