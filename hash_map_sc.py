@@ -1,3 +1,10 @@
+# Name: Robert Smith
+# OSU Email: Smithro8@oregonstate.edu
+# Course:       CS261 - Data Structures
+# Assignment: 6
+# Due Date: 03/17/2023
+# Description: A chaining implementation of a hash table. Has various methods such as put, clear, get, and
+#              contains.
 
 from a6_include import (DynamicArray, LinkedList,
                         hash_function_1, hash_function_2)
