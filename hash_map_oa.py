@@ -172,18 +172,26 @@ class HashMap:
         TODO: Write this implementation
         """
         self._index = 0
+        self._returned_vals = 0
         return self
 
     def __next__(self):
         """
         Gets the next value and advances iterator
         """
-        value = self._buckets[self._index]
-        self._index += 1
-        if value is not None:
-            return value
+        if self._returned_vals != self._size:
+            while self._buckets[self._index] is None:
+                self._index += 1
+            value = self._buckets[self._index]
+            self._index += 1
+            if value is not None:
+                self._returned_vals += 1
+                return value
         else:
-            pass
+            StopIteration
+
+
+
 
 
     # def __iter__(self):
