@@ -180,23 +180,34 @@ class HashMap:
         Gets the next valid object and advances iterator
         """
 
-        if self._returned_vals != self._size:
-            # edge case if multiple tombstones
-            if self._buckets[self._index] is not None:
-                if self._buckets[self._index].is_tombstone is True:
-                    while self._buckets[self._index].is_tombstone is True:
+        try:
+            conditional = 0
+            # stops iteration once all vals returned
+            if self._returned_vals == self._size:
+                conditional = 1
+            while conditional == 0:
+                # iterates to next non-none object
+                if self._buckets[self._index] is None:
+                    while self._buckets[self._index] is None:
                         self._index += 1
-            # gets next non-tombstone object that's not None
-            while self._buckets[self._index] is None:
-                self._index += 1
+                # iterates past tombstoned objects
                 if self._buckets[self._index] is not None:
-                    while self._buckets[self._index].is_tombstone is True:
-                        self._index += 1
+                    if self._buckets[self._index].is_tombstone is False:
+                        conditional = 1
+                    if self._buckets[self._index].is_tombstone is True:
+                        while self._buckets[self._index].is_tombstone is True:
+                            self._index += 1
             value = self._buckets[self._index]
             self._index += 1
+            # raises StopIteration
+            if value is None:
+                raise DynamicArrayException
+            if value is not None:
+                if value.is_tombstone is True:
+                    raise DynamicArrayException
             self._returned_vals += 1
             return value
-        else:
+        except DynamicArrayException:
             raise StopIteration
 
     def get_hash_index(self, key, remove=0):
